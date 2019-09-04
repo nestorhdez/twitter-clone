@@ -29,10 +29,11 @@ data() {
             email: '',
             password: ''
         },
-      error: {
-        status: false,
-        message: ''
-      }
+        error: {
+            status: false,
+            message: ''
+        },
+        jwt: localStorage.getItem('jwt')
     }
 },
 components: {
@@ -64,6 +65,11 @@ methods: {
                 }
             })
     }
+  },
+  created(){
+      if(this.jwt){
+          this.$router.replace('/');
+      }
   }
 }
 </script>

@@ -26,7 +26,8 @@ export default {
 			error: {
 				status: false,
 				message: ''
-			}
+			},
+            jwt: localStorage.getItem('jwt')
 		}
 	},
 	methods: {
@@ -54,6 +55,11 @@ export default {
 	},
 	components: {
 		Nav
+	},
+	created(){
+		if(this.jwt){
+			this.$router.replace('/');
+		}
 	}
 }
 </script>
