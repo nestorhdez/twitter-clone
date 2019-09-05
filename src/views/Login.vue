@@ -43,10 +43,10 @@ export default {
 				this.$router.replace('/');
 				})
 				.catch(err => {
-					if(err.response.status == 400) {
+					if(err.response && err.response.status == 400) {
 						this.error.status = true;
 						this.error.message = "Email or password wrong"
-					}else if(err.response.status == 401) {
+					}else {
 						this.error.status = true;
 						this.error.message = "Connection error"
 					}
