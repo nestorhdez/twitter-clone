@@ -54,16 +54,20 @@ methods: {
                 localStorage.setItem('jwt', JSON.stringify(res.data))
                 this.$router.replace('/');
             })
-            .catch(error => {                
+            .catch(err => {
                 this.error.status = true;
-                const res = error.response.request.response;
-                const msg = JSON.parse(res).errmsg
+                if(err.request.status != 400){
+                    this.error.message = 'Conection error';
+                    return;
+                };
+                const res = err.response.request.response;
+                const msg = JSON.parse(res).errmsg;
                 if(msg.includes('duplicate') && msg.includes('email')) {
                     this.error.message = 'This email has already an account'
                 }else if (msg.includes('duplicate') && msg.includes('username')) {
                     this.error.message = 'This username already exists'
                 }
-            })
+            });
     }
   },
   created(){
