@@ -14,25 +14,25 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
 
-$light-color: #F8F8F8;
+$primary-color: #26364F;
 
 #nav {
   padding-top: 30px;
   margin-bottom: 30px;
   display: flex;
-  border-bottom: 3px solid $light-color;
+  border-bottom: 3px solid $primary-color;
 }
 
 #nav a {
   font-weight: bold;
-  color: $light-color;
+  color: $primary-color;
   display: inline-block;
-  width: 50vh;
+  width: 50vw;
   text-decoration: none;
 }
 
 #nav a.router-link-exact-active {
-  color: $light-color;
-  border-bottom: 6px solid $light-color;
+  color: $primary-color;
+  border-bottom: 6px solid $primary-color;
 }
 </style>

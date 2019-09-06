@@ -84,9 +84,8 @@ methods: {
         padding-bottom: 40px;
     }
 
-    $primary-color: #66A8A6;
-    $dark-color: #26364F;
-    $light-color: #F8F8F8;
+    $primary-color: #F8F8F8;
+    $secondary-color: #26364F;
 
     #error {
         color: #F0825D;
@@ -94,29 +93,33 @@ methods: {
     }
 
     form {
-        display: flex;
-        flex-direction: column;
-        padding: 20px;
-        width: 85%;
-        margin: 0 auto;
-    }
+		display: flex;
+		flex-wrap: wrap;
+		padding: 20px;
+		width: 85%;
+		margin: 0 auto;
+	}
+
+	form * {
+		flex-basis: 100%;
+	}
 
     label {
-        color: $light-color;
+        color: $secondary-color;
         text-align: left;
         font-size: 1.2rem;
         font-weight: 500;
     }
 
     input {
-        background-color: $dark-color;
+        background-color: $primary-color;
         border: none;
-        border-bottom: 3px solid $light-color;
+        border-bottom: 3px solid $secondary-color;
         padding: 10px;
         margin-bottom: 20px;
     }
     input, input::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
-        color: $light-color;
+        color: $secondary-color;
         opacity: 1; /* Firefox */
     }
 
@@ -125,19 +128,19 @@ methods: {
     input:-webkit-autofill:hover, 
     input:-webkit-autofill:focus, 
     input:-webkit-autofill:active  {
-        -webkit-box-shadow: 0 0 0 30px $dark-color inset !important;
+        -webkit-box-shadow: 0 0 0 30px $primary-color inset !important;
     }
 
     /*Change text in autofill textbox*/
     input:-webkit-autofill {
-        -webkit-text-fill-color: $light-color !important;
+        -webkit-text-fill-color: $secondary-color !important;
     }
 
     button {
         font-size: 1.1rem;
-        color: $dark-color; 
-        background-color: $light-color;
-        border: 1px solid $light-color;
+        color: $primary-color; 
+        background-color: $secondary-color;
+        border: 1px solid $secondary-color;
         padding: 10px;
         margin-top: 30px;
         border-radius: 25px;
@@ -145,7 +148,28 @@ methods: {
     }
 
     button:active {
-        background-color: $dark-color;
-        color: $light-color;
+        background-color: $primary-color;
+        color: $secondary-color;
     }
+
+    @media(min-width: 768px){
+		.signup {
+			width: 436px;
+			margin: 0 auto;
+		}
+
+		form {
+			margin: 0;
+			padding: 0;
+			width: 100%;
+		}
+
+		form * {
+			flex-basis: 50%;
+		}
+		form button {
+			flex-basis: 30%;
+			margin: 0 auto;
+		}
+	}
 </style>
