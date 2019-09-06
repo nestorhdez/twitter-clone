@@ -59,13 +59,13 @@ methods: {
                 if(err.request.status != 400){
                     this.error.message = 'Conection error';
                     return;
-                };
+                }
                 const res = err.response.request.response;
                 const msg = JSON.parse(res).errmsg;
                 if(msg.includes('duplicate') && msg.includes('email')) {
-                    this.error.message = 'This email has already an account'
+                    this.error.message = 'This email has already an account';
                 }else if (msg.includes('duplicate') && msg.includes('username')) {
-                    this.error.message = 'This username already exists'
+                    this.error.message = 'This username already exists';
                 }
             });
     }
@@ -157,15 +157,19 @@ methods: {
 			width: 436px;
 			margin: 0 auto;
 		}
-
 		form {
 			margin: 0;
 			padding: 0;
 			width: 100%;
 		}
-
 		form * {
 			flex-basis: 50%;
+		}
+		label {
+			padding-top: 6px;
+		}
+        h2 {
+			margin-bottom: 20px;
 		}
 		form button {
 			flex-basis: 30%;

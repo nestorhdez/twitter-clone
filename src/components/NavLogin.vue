@@ -29,6 +29,7 @@ $primary-color: #26364F;
   display: inline-block;
   width: 50vw;
   text-decoration: none;
+  padding-bottom: 5px;
 }
 
 #nav a.router-link-exact-active {

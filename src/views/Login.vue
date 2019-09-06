@@ -1,16 +1,16 @@
 <template>
-  <div class="login">
+	<div class="login">
 		<h1>Twitter clone</h1>
 		<Nav/>
+		<h2 id="error" v-if="error.status" >{{error.message}}</h2>
 		<form>
 			<label for="email">Email</label>
 			<input id="email" type="email" v-model="form.email" placeholder="Email..." required>
 			<label for="password">Password</label>
 			<input id="password" type="password" v-model="form.password" placeholder="Password..." required>
-			<h2 id="error" v-if="error.status" >{{error.message}}</h2>
 			<button @click="login">Log in</button>
 		</form>
-  	</div>
+	</div>
 </template>
 
 <script>
@@ -33,7 +33,7 @@ export default {
 	methods: {
 		login() {
 			if(this.form.email == '' || this.form.password == ''){
-				return
+				return;
 			}
 			this.error.status = false;
 			this.error.message = '';
@@ -45,10 +45,10 @@ export default {
 				.catch(err => {
 					if(err.response && err.response.status == 400) {
 						this.error.status = true;
-						this.error.message = "Email or password wrong"
+						this.error.message = "Wrong email or password";
 					}else {
 						this.error.status = true;
-						this.error.message = "Connection error"
+						this.error.message = "Connection error";
 					}
 				})
 		}
@@ -143,17 +143,21 @@ export default {
 			width: 436px;
 			margin: 0 auto;
 		}
-
 		form {
 			margin: 0;
 			padding: 0;
 			width: 100%;
 		}
-
 		form * {
 			flex-basis: 50%;
 		}
-		form button {
+		label {
+			padding-top: 6px;
+		}
+		h2 {
+			margin-bottom: 20px;
+		}
+		button {
 			flex-basis: 30%;
 			margin: 0 auto;
 		}
