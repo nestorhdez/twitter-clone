@@ -1,10 +1,13 @@
 <template>
     <div class="home">
         <h1>Home page</h1>
+        <Navbar/>
     </div>
 </template>
 
 <script>
+import Navbar from '../components/Navbar'
+
 export default {
     data() {
         return {
@@ -15,6 +18,9 @@ export default {
         if(!this.jwt) {
             this.$router.replace('/login')
         }
+    },
+    components: {
+        Navbar
     }
 }
 </script>

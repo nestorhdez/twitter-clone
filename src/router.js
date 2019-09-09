@@ -9,11 +9,6 @@ Vue.use(Router)
 export default new Router({
   routes: [
     {
-      path: '/',
-      name: '/home',
-      component: Home
-    },
-    {
       path: '/login',
       name: 'login',
       component: Login
@@ -22,6 +17,21 @@ export default new Router({
       path: '/signup',
       name: 'signup',
       component: Signup
+    },
+    {
+      path: '/',
+      name: 'home',
+      component: Home
+    },
+    {
+      path: '/search',
+      name: 'search',
+      component: Home
+    },
+    {
+      path: '/user/:username',
+      name: 'profile',
+      component: Home
     }
   ]
 })
