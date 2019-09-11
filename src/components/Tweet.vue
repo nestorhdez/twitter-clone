@@ -4,6 +4,7 @@
         <p class="text">{{tweet.text}}</p>
         <div>
             <span class="date">{{dateFormated}}</span>
+            <span class="num-likes">{{tweet.likes.length}}</span>
             <img @click="like" :src="getSrc(icon)" class="like" alt="Like icon">
         </div>
     </div>    
@@ -40,11 +41,17 @@ export default {
         like(e) {
             if(this.icon == 'like.svg') {
                 Axios.patch(`http://localhost:3001/twitter/tweets/like/${this.tweet._id}`)
-                    .then(() => this.icon = 'like-fill.svg')
+                    .then(() => {
+                        this.icon = 'like-fill.svg';
+                        this.tweet.likes.push(1);
+                    })
                     .catch(() => {});
             }else {
                 Axios.patch(`http://localhost:3001/twitter/tweets/dislike/${this.tweet._id}`)
-                    .then(() => this.icon = 'like.svg')
+                    .then(() => {
+                        this.icon = 'like.svg'
+                        this.tweet.likes.pop();
+                    })
                     .catch(() => {});
             }
         },
@@ -89,9 +96,13 @@ export default {
         font-size: small;
     }
 
+    .num-likes {
+        margin-left: auto;
+        margin-right: 5px;
+    }
+
     .like {
         height: 20px;
         width: 20px;
-        margin-left: auto;
     }
 </style>
