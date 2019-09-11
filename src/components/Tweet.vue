@@ -11,6 +11,8 @@
 
 <script>
 
+import Axios from '../interceptors';
+
 const moment = require('moment');
 
 export default {
@@ -20,12 +22,14 @@ export default {
             text: String,
             owner: String,
             createdDate: Date,
-            likes: Array
-        }
+            likes: Array,
+            _id: String
+        },
+        username: String
+
     },
     data(){
         return {
-            username: '',
             icon: this.tweet.likes.includes(this.username) ? 'like-fill.svg' : 'like.svg'
         }
     },
@@ -33,8 +37,16 @@ export default {
         getSrc(img) {
             return require('../assets/icons/' + img)
         },
-        like() {
-            this.icon == 'like.svg' ? this.icon = 'like-fill.svg' : this.icon = 'like.svg'
+        like(e) {
+            if(this.icon == 'like.svg') {
+                Axios.patch(`http://localhost:3001/twitter/tweets/like/${this.tweet._id}`)
+                    .then(() => this.icon = 'like-fill.svg')
+                    .catch(() => {});
+            }else {
+                Axios.patch(`http://localhost:3001/twitter/tweets/dislike/${this.tweet._id}`)
+                    .then(() => this.icon = 'like.svg')
+                    .catch(() => {});
+            }
         },
         moment() {
             return moment();

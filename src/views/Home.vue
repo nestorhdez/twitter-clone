@@ -1,7 +1,7 @@
 <template>
     <div class="home">
 		<h2 id="error" v-if="error.status" >{{error.message}}</h2>
-        <Tweet :tweet="tweet" v-for="(tweet, i) in tweets" :key="i"/>
+        <Tweet :tweet="tweet" :username="username" v-for="(tweet, i) in tweets" :key="i"/>
         <Navbar/>
     </div>
 </template>
@@ -15,6 +15,7 @@ export default {
     data() {
         return {
             jwt: localStorage.getItem('jwt'),
+            username: '',
             tweets: [],
             error: {
 				status: false,
@@ -29,6 +30,7 @@ export default {
             this.error.status = false;
             Axios.get('http://localhost:3001/twitter/tweets/timeline')
                 .then(res => {
+                    this.username = res.data.username;
                     if(res.data.data.length > 0) {
                         this.tweets = res.data.data;
                     }else {
