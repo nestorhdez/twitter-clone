@@ -27,7 +27,6 @@ export default {
             _id: String
         },
         username: String
-
     },
     data(){
         return {
@@ -38,7 +37,7 @@ export default {
         getSrc(img) {
             return require('../assets/icons/' + img)
         },
-        like(e) {
+        like() {
             if(this.icon == 'like.svg') {
                 Axios.patch(`http://localhost:3001/twitter/tweets/like/${this.tweet._id}`)
                     .then(() => {
@@ -65,9 +64,11 @@ export default {
         }
     }
 }
+
 </script>
 
 <style lang="scss" scoped>
+
     .tweet {
         display: flex;
         flex-direction: column;
@@ -79,7 +80,6 @@ export default {
             display: flex;
             width: 100%;
         }
-
     }
 
     .username {
@@ -105,4 +105,5 @@ export default {
         height: 20px;
         width: 20px;
     }
+
 </style>
