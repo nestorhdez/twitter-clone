@@ -52,6 +52,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+    .home {
+        padding-bottom: 55px;
+    }
     #error {
         margin-top: calc(50vh - 55px);
 		color: #F0825D;

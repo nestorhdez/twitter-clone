@@ -11,7 +11,7 @@ AuthAxios.interceptors.request.use((config) => {
         }
         return config;
     }, (error) => {
-        console.log("Request error: " + error)
+        return error;
   })
 
 AuthAxios.interceptors.response.use( (response) => {
@@ -29,19 +29,18 @@ AuthAxios.interceptors.response.use( (response) => {
             const token = JSON.parse(tokenObj)
             return axios.post('http://localhost:3001/twitter/token', {refresh_token: token.refresh_token, grant_type: "refresh_token"})
                 .then(res => {
-                    localStorage.removeItem('jwt')
-                    localStorage.setItem('jwt', JSON.stringify(res.data))
+                    localStorage.removeItem('jwt');
+                    localStorage.setItem('jwt', JSON.stringify(res.data));
 
                     // New request with new token
                     const config = error.config;
                     config.headers.Authorization = `Bearer ${res.data.access_token}`;
 
-                    return axios(config)
+                    return axios(config);
                 })
                 .catch(function(err) {
-                    console.log('Catch', err)
-                    localStorage.removeItem('jwt')
-                    router.replace('/login')
+                    localStorage.removeItem('jwt');
+                    router.replace('/login');
                 })
         }
     });
