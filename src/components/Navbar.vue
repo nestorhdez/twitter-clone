@@ -6,7 +6,7 @@
         <router-link to="/search" class="nav-icon">
             <img class="nav-icon" :src="getSrc(icons.search)" alt="Search icon">
         </router-link>
-        <router-link :to="`/user/${user.username}`" class="nav-icon">
+        <router-link :to="`/profile`" class="nav-icon">
             <img class="nav-icon" :src="getSrc(icons.profile)" alt="Profile icon">
         </router-link>
     </div>

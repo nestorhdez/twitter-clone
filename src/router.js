@@ -1,8 +1,10 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from './views/Home'
 import Login from './views/Login'
 import Signup from './views/Signup'
+import Home from './views/Home'
+import Search from './views/Search'
+import Profile from './views/Profile'
 
 Vue.use(Router)
 
@@ -26,12 +28,12 @@ export default new Router({
     {
       path: '/search',
       name: 'search',
-      component: Home
+      component: Search
     },
     {
-      path: '/user/:username',
+      path: '/profile',
       name: 'profile',
-      component: Home
+      component: Profile
     }
   ]
 })
