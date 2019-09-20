@@ -1,7 +1,7 @@
 <template>
     <div id="profile">
         <h1 v-if="username">@{{username}}</h1>
-        <Slider :cssScroll="cssScroll" @slider="slider"/>
+        <Slider @slider="slider" leftBtn="Tweets" rightBtn="Likes" :cssScroll="cssScroll"/>
         <div id="tweets-container" :class="cssScroll.container">
             <div id="tweets">
 		        <h2 id="error" v-if="tweets.error.status">{{tweets.error.message}}</h2>

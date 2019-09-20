@@ -1,7 +1,7 @@
 <template>
     <div id="slider" :class="cssScroll.slider">
-        <button :class="selected.tweets ? 'selected' : '' " @click="(e) =>{handler(e, '-')}">Tweets</button>
-        <button :class="selected.likes ? 'selected' : '' " @click="(e) => {handler(e, '+')}">Likes</button>
+        <button id="left-btn" :class="selected.left ? 'selected' : '' " @click="(e) =>{handler(e, '-')}">{{leftBtn}}</button>
+        <button :class="selected.right ? 'selected' : '' " @click="(e) => {handler(e, '+')}">{{rightBtn}}</button>
     </div>
 </template>
 
@@ -9,6 +9,8 @@
 export default {
     name: 'slider',
     props: {
+        leftBtn: String,
+        rightBtn: String,
         cssScroll: {
             slider: String
         }
@@ -16,21 +18,21 @@ export default {
     data(){
         return {
             selected: {
-                tweets: true,
-                likes: false
+                left: true,
+                right: false
             }
         }
     },
     methods: {
         handler(e, xCoord){
-            let btn = e.target.innerText.toLowerCase();
+            let btn = e.target.id;
             this.$emit('slider', btn, xCoord);
-            if(btn == 'tweets') {
-                this.selected.tweets = true;
-                this.selected.likes = false;
+            if(btn == 'left-btn') {
+                this.selected.left = true;
+                this.selected.right = false;
             } else {
-                this.selected.tweets = false;
-                this.selected.likes = true;
+                this.selected.left = false;
+                this.selected.right = true;
             }
         }
     }
