@@ -1,11 +1,8 @@
 <template>
     <div id="profile">
         <h1 v-if="username">@{{username}}</h1>
-        <div id="nav" :class="style.nav">
-            <button :class="tweets.selected ? 'selected' : '' " @click="(e) =>{getTweets(); slider(e, '-')}">Tweets</button>
-            <button :class="likes.selected ? 'selected' : '' " @click="(e) => {getLikes(); slider(e, '+')}">Likes</button>
-        </div>
-        <div id="tweets-container" :class="style.container">
+        <Slider :cssScroll="cssScroll" @slider="slider"/>
+        <div id="tweets-container" :class="cssScroll.container">
             <div id="tweets">
 		        <h2 id="error" v-if="tweets.error.status">{{tweets.error.message}}</h2>
                 <Tweet :tweet="tweet" :username="username" v-for="(tweet, i) in tweets.array" :key="i"/>
@@ -23,6 +20,7 @@
 
 import Tweet from '../components/Tweet';
 import Navbar from '../components/Navbar';
+import Slider from '../components/Slider';
 import Axios from '../interceptors';
 
 export default {
@@ -37,7 +35,6 @@ export default {
 				    status: false,
 				    message: ''
                 },
-                selected: true
             },
             likes: {
                 array: [],
@@ -45,10 +42,9 @@ export default {
 				    status: false,
 				    message: ''
                 },
-                selected: false
             },
-            style: {
-                nav: '',
+            cssScroll: {
+                slider: '',
                 container: ''
             }
         }
@@ -77,15 +73,8 @@ export default {
         getLikes(){
             this.getFromApi('likes', this.likes);
         },
-        slider(e, xCoord){
-            let btn = e.target.innerText.toLowerCase();
-            if(btn == 'tweets') {
-                this.tweets.selected = true;
-                this.likes.selected = false;
-            } else {
-                this.tweets.selected = false;
-                this.likes.selected = true;
-            }
+        slider(selected, xCoord){
+            selected == 'tweets' ? this.getTweets() : this.getLikes();
             let width = document.getElementById('tweets-container').offsetWidth;
             document.getElementById('tweets-container').scrollBy({left: xCoord + width, behavior: 'smooth'});
         }
@@ -93,22 +82,22 @@ export default {
     created() {
         if(!this.jwt) {
             this.$router.replace('/login')
-        }else {
-            this.getTweets();
-            window.onscroll = () => {
-                if(document.documentElement.scrollTop > 97){
-                    this.style.nav = 'nav-fixed';
-                    this.style.container = 'container-mt';
-                }else{
-                    this.style.nav = '';
-                    this.style.container = '';
-                }
-            };
         }
+        this.getTweets();
+        window.onscroll = () => {
+            if(document.documentElement.scrollTop > 97){
+                this.cssScroll.slider = 'slider-fixed';
+                this.cssScroll.container = 'container-mt';
+            }else{
+                this.cssScroll.slider = '';
+                this.cssScroll.container = '';
+            }
+        };        
     },
     components: {
         Tweet,
-        Navbar
+        Navbar,
+        Slider
     }
 }
 </script>
@@ -120,36 +109,6 @@ $bg-color: #F8F8F8;
 
 #profile {
     margin-top: 40px;
-}
-
-#nav {
-    padding-top: 30px;
-    display: flex;
-    border-bottom: 3px solid $primary-color;
-}
-
-#nav.nav-fixed {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    padding-top: 15px;
-    background-color: $bg-color;
-}
-
-#nav button {
-    font-weight: bold;
-    font-size: 1.1rem;
-    color: $primary-color;
-    display: inline-block;
-    width: 50vw;
-    padding-bottom: 5px;
-    background: none;
-    border: none;
-    outline: none;
-}
-
-#nav .selected {
-    border-bottom: 3px solid $primary-color;
 }
 
 .container-mt {
