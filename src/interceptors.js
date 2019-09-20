@@ -38,7 +38,7 @@ AuthAxios.interceptors.response.use( (response) => {
 
                     return axios(config);
                 })
-                .catch(function(err) {
+                .catch(function() {
                     localStorage.removeItem('jwt');
                     router.replace('/login');
                 })
