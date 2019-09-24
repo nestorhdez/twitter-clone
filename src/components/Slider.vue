@@ -6,6 +6,9 @@
 </template>
 
 <script>
+
+import eventBus from '../main';
+
 export default {
     name: 'slider',
     props: {
@@ -26,7 +29,7 @@ export default {
     methods: {
         handler(e, xCoord){
             let btn = e.target.id;
-            this.$emit('slider', btn, xCoord);
+            eventBus.$emit('slider', btn, xCoord);
             if(btn == 'left-btn') {
                 this.selected.left = true;
                 this.selected.right = false;
