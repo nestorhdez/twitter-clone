@@ -1,6 +1,6 @@
 <template>
     <div id="profile">
-        <h1 v-if="username">@{{username}}</h1>
+        <h1 >@{{username}}</h1>
         <Slider leftBtn="Tweets" rightBtn="Likes" :cssScroll="cssScroll"/>
         <SliderContainers :selected="selected" :cssScroll="cssScroll"/>
         <Navbar/>
@@ -9,6 +9,7 @@
 
 <script>
 
+import { mapState } from 'vuex';
 import Navbar from '../components/Navbar';
 import Slider from '../components/Slider';
 import SliderContainers from '../components/SliderContainers';
@@ -18,7 +19,6 @@ export default {
     data() {
         return {
             jwt: localStorage.getItem('jwt'),
-            username: '',
             selected: {
                 tweets: true,
                 likes: false
@@ -29,9 +29,15 @@ export default {
             }
         }
     },
+    computed: mapState({
+        username: state => state.profile.user.username,
+    }),
     created() {
         if(!this.jwt) {
-            this.$router.replace('/login')
+            this.$router.replace('/login');
+        }
+        if(!this.username){
+            this.$store.dispatch('profile/getUser');
         }
         window.onscroll = () => {
             if(document.documentElement.scrollTop > 97){
@@ -41,7 +47,7 @@ export default {
                 this.cssScroll.slider = '';
                 this.cssScroll.container = '';
             }
-        };        
+        };
     },
     components: {
         Navbar,

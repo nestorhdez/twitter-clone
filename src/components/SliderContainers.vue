@@ -1,10 +1,10 @@
 <template>
     <div id="tweets-container" :class="cssScroll.container">
-        <div id="tweets">
+        <div id="tweets" v-if="username">
             <h2 id="error" v-if="tweets.error.status">{{tweets.error.message}}</h2>
             <Tweet :tweet="tweet" :username="username" v-for="(tweet, i) in tweets.array" :key="i"/>
         </div>
-        <div id="likes">
+        <div id="likes" v-if="username">
             <h2 id="error" v-if="likes.error.status">{{likes.error.message}}</h2>
             <Tweet :tweet="tweet" :username="username" v-for="(tweet, i) in likes.array" :key="i"/>
         </div>
@@ -15,6 +15,7 @@
 import Axios from '../interceptors';
 import eventBus from '../main';
 import Tweet from '../components/Tweet';
+import { mapState } from 'vuex';
 
 export default {
     name: 'slider-containers',
@@ -44,12 +45,14 @@ export default {
             },
         }
     },
+    computed: mapState({
+        username: state => state.profile.user.username,
+    }),
     methods: {
         getFromApi(endPoint, obj){
             obj.error.status = false;
             Axios.get(`http://localhost:3001/twitter/tweets/${endPoint}`)
                 .then(res => {
-                    this.username = res.data.username;
                     if(res.data.data.length > 0) {
                         obj.array = res.data.data;
                     }else {
