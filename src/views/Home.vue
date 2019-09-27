@@ -10,7 +10,7 @@
 import Tweet from '../components/Tweet';
 import Navbar from '../components/Navbar';
 import Axios from '../interceptors';
-import { mapState } from 'vuex';
+import { mapGetters } from 'vuex';
 
 export default {
     data() {
@@ -23,9 +23,9 @@ export default {
 			}
         }
     },
-    computed: mapState({
-        username: state => state.profile.user.username,
-    }),
+    computed: mapGetters('profile', [
+        'username'
+    ]),
     created(){
         if(!this.jwt) {
             this.$router.replace('/login')

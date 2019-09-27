@@ -7,6 +7,7 @@ const state = {
 
 //Getters
 const getters = {
+    username: state => state.user.username,
     following: state => state.user.following.length,
     followers: state => state.user.followers.length
 }

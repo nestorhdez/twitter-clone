@@ -15,14 +15,12 @@
 import Axios from '../interceptors';
 import eventBus from '../main';
 import Tweet from '../components/Tweet';
-import { mapState } from 'vuex';
+import { mapGetters } from 'vuex';
 
 export default {
     name: 'slider-containers',
     props: {
-        selected: {
-
-        },
+        selected: Object,
         cssScroll: {
             containers: String
         }
@@ -32,22 +30,22 @@ export default {
             tweets: {
                 array: [],
                 error: {
-				    status: false,
-				    message: ''
+                    status: false,
+                    message: ''
                 },
             },
             likes: {
                 array: [],
                 error: {
-				    status: false,
-				    message: ''
+                    status: false,
+                    message: ''
                 },
             },
         }
     },
-    computed: mapState({
-        username: state => state.profile.user.username,
-    }),
+    computed: mapGetters('profile', [
+        'username'
+    ]),
     methods: {
         getFromApi(endPoint, obj){
             obj.error.status = false;

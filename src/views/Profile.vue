@@ -1,6 +1,6 @@
 <template>
-    <div id="profile">
-        <h1 >@{{username}}</h1>
+    <div id="profile" :class="showProfileComponent ? '' : 'hide-scroll'">
+        <Header @scroll="scrollHandler" :username="username" :followers="user.followers" :following="user.following" v-if="username"/>
         <Slider leftBtn="Tweets" rightBtn="Likes" :cssScroll="cssScroll"/>
         <SliderContainers :selected="selected" :cssScroll="cssScroll"/>
         <Navbar/>
@@ -9,7 +9,8 @@
 
 <script>
 
-import { mapState } from 'vuex';
+import { mapState, mapGetters } from 'vuex';
+import Header from '../components/UserHeader';
 import Navbar from '../components/Navbar';
 import Slider from '../components/Slider';
 import SliderContainers from '../components/SliderContainers';
@@ -26,12 +27,19 @@ export default {
             cssScroll: {
                 slider: '',
                 container: ''
-            }
+            },
+            showProfileComponent: true
         }
     },
-    computed: mapState({
-        username: state => state.profile.user.username,
-    }),
+    computed: {
+        ...mapGetters('profile', [ 'username']),
+        ...mapState('profile', [ 'user' ])
+    },
+    methods: {
+        scrollHandler(event){
+            this.showProfileComponent = event;
+        }
+    },
     created() {
         if(!this.jwt) {
             this.$router.replace('/login');
@@ -40,7 +48,7 @@ export default {
             this.$store.dispatch('profile/getUser');
         }
         window.onscroll = () => {
-            if(document.documentElement.scrollTop > 97){
+            if(document.documentElement.scrollTop > 134){
                 this.cssScroll.slider = 'slider-fixed';
                 this.cssScroll.container = 'container-mt';
             }else{
@@ -50,6 +58,7 @@ export default {
         };
     },
     components: {
+        Header,
         Navbar,
         Slider,
         SliderContainers
@@ -64,6 +73,12 @@ $bg-color: #F8F8F8;
 
 #profile {
     margin-top: 40px;
+}
+
+#profile.hide-scroll {
+    margin-top: 0;
+    height: 100vh;
+    overflow-y: hidden;
 }
 
 </style>
