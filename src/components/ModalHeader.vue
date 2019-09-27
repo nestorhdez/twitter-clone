@@ -6,7 +6,7 @@
         <div id="users-model-container">
             <div class="user" v-for="(user, i) in arrayOfUsers" :key="i">
                 <router-link :to="`/user/${user}`">@{{user}}</router-link>
-                <button>{{buttonText(user)}}</button>
+                <FollowBtn :userToCheck="user"/>
             </div>
         </div>
     </div>
@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import FollowBtn from './FollowBnt';
 
 export default {
     name: 'modal',
@@ -23,13 +23,8 @@ export default {
         title: String,
         arrayOfUsers: Array
     },
-    computed: {
-        ...mapState('profile', ['user'])
-    },
-    methods: {
-        buttonText(user) {
-            return this.user.following.find(followingUser => followingUser == user) ? 'Unfollow' : 'Follow';            
-        }
+    components:{
+        FollowBtn
     }
 }
 </script>
@@ -72,20 +67,6 @@ export default {
             text-decoration: none;
             color: $primary-color;
             font-weight: 500;
-        }
-
-        button {
-            background-color: $primary-color;
-            color: $bg-color;
-            padding: 5px;
-            border-radius: 3px;
-            border: none;
-            font-weight: 500;
-            outline: none;
-        }
-        button:active {
-            background-color: $bg-color;
-            color: $primary-color;
         }
     }
 
