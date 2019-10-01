@@ -6,25 +6,29 @@
         <router-link to="/search" class="nav-icon">
             <img class="nav-icon" :src="getSrc(icons.search)" alt="Search icon">
         </router-link>
-        <router-link :to="`/profile`" class="nav-icon">
+        <router-link :to="`/${username}`" class="nav-icon">
             <img class="nav-icon" :src="getSrc(icons.profile)" alt="Profile icon">
         </router-link>
     </div>
 </template>
 
 <script>
+
+import { mapGetters } from 'vuex';
+
 export default {
     data() {
         return {
-            user: {
-                username: ''
-            },
+            user: '',
             icons: {
                 home: this.$route.name != 'home' ? 'home.svg' : 'home-fill.svg',
                 search: this.$route.name != 'search' ? 'search.svg' : 'search-fill.svg',
-                profile: this.$route.name != 'profile' ? 'profile.svg' : 'profile-fill.svg'
+                profile: this.$route.name == 'profile' && this.user == this.username ? 'profile-fill.svg' : 'profile.svg'
             }
         }
+    },
+    computed: {
+        ...mapGetters('profile', [ 'username'])
     },
     methods: {
         getSrc(img) {
@@ -33,10 +37,20 @@ export default {
     },
     watch: {
         '$route'() {
-            this.$route.name != 'home' ? this.icons.home = 'home.svg' : this.icons.home = 'home-fill.svg';
-            this.$route.name != 'search' ? this.icons.search = 'search.svg' : this.icons.search = 'search-fill.svg';
-            this.$route.name != 'profile' ? this.icons.profile = 'profile.svg' : this.icons.profile = 'profile-fill.svg';
+            this.user = this.$route.params.user;
+        },
+        user(){
+            this.icons.profile = this.$route.name == 'profile' && this.user == this.username ? 'profile-fill.svg' : 'profile.svg'
+        },
+        username(){
+            this.icons.profile = this.$route.name == 'profile' && this.user == this.username ? 'profile-fill.svg' : 'profile.svg'
         }
+    },
+    created() {
+        if(!this.username){
+            this.$store.dispatch('profile/getUser');
+        }
+        this.user = this.$route.params.user;
     }
 }
 </script>

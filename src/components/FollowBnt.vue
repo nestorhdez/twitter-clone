@@ -1,5 +1,5 @@
 <template>
-    <button @click="followUnfollowAction">{{btnText}}</button>    
+    <button id="follow-btn" @click="followUnfollowAction">{{btnText}}</button>    
 </template>
 
 <script>
@@ -10,18 +10,15 @@ import Axios from '../interceptors';
 export default {
     name: 'follow-btn',
     props: {
-        userToCheck: String
+        userToCheck: String,
+        user: Object
     },
     computed: {
-        ...mapState('profile', ['user']),
         btnText(){
             return this.user.following.find(followingUser => followingUser == this.userToCheck) ? 'Unfollow' : 'Follow';
         }
     },
     methods: {
-        buttonText(userToCheck) {
-            return this.user.following.find(followingUser => followingUser == userToCheck) ? 'Unfollow' : 'Follow';
-        },
         followUnfollowAction(e){
             const btn = e.target.innerText.toLowerCase();
             Axios.patch(`http://localhost:3001/twitter/users/${btn}/${this.userToCheck}`)

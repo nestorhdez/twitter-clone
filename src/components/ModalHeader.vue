@@ -1,12 +1,12 @@
 <template>
 
     <div id="modal">
-        <div @click="() => this.$emit('hide')" id="hide">Close</div>
+        <div @click="$emit('hide')" id="hide">Close</div>
         <span id="modal-title">{{title}}</span>
         <div id="users-model-container">
             <div class="user" v-for="(user, i) in arrayOfUsers" :key="i">
-                <router-link :to="`/user/${user}`">@{{user}}</router-link>
-                <FollowBtn :userToCheck="user"/>
+                <router-link :to="`/${user}`">@{{user}}</router-link>
+                <FollowBtn :userToCheck="user" :user="userLogged"/>
             </div>
         </div>
     </div>
@@ -19,7 +19,7 @@ import FollowBtn from './FollowBnt';
 export default {
     name: 'modal',
     props: {
-        username: String,
+        userLogged: Object,
         title: String,
         arrayOfUsers: Array
     },

@@ -2,11 +2,11 @@
     <div id="tweets-container" :class="cssScroll.container">
         <div id="tweets" v-if="username">
             <h2 id="error" v-if="tweets.error.status">{{tweets.error.message}}</h2>
-            <Tweet :tweet="tweet" :username="username" v-for="(tweet, i) in tweets.array" :key="i"/>
+            <Tweet :tweet="tweet" :username="userNameLogged" v-for="(tweet, i) in tweets.array" :key="i"/>
         </div>
         <div id="likes" v-if="username">
             <h2 id="error" v-if="likes.error.status">{{likes.error.message}}</h2>
-            <Tweet :tweet="tweet" :username="username" v-for="(tweet, i) in likes.array" :key="i"/>
+            <Tweet :tweet="tweet" :username="userNameLogged" v-for="(tweet, i) in likes.array" :key="i"/>
         </div>
     </div>
 </template>
@@ -15,12 +15,12 @@
 import Axios from '../interceptors';
 import eventBus from '../main';
 import Tweet from '../components/Tweet';
-import { mapGetters } from 'vuex';
 
 export default {
     name: 'slider-containers',
     props: {
-        selected: Object,
+        username: String,
+        userNameLogged: String,
         cssScroll: {
             containers: String
         }
@@ -43,13 +43,10 @@ export default {
             },
         }
     },
-    computed: mapGetters('profile', [
-        'username'
-    ]),
     methods: {
         getFromApi(endPoint, obj){
             obj.error.status = false;
-            Axios.get(`http://localhost:3001/twitter/tweets/${endPoint}`)
+            Axios.get(`http://localhost:3001/twitter/tweets/${endPoint}/${this.username}`)
                 .then(res => {
                     if(res.data.data.length > 0) {
                         obj.array = res.data.data;
@@ -77,7 +74,7 @@ export default {
     },
     created(){
         this.getTweets();
-        eventBus.$on('slider', this.slider)
+        eventBus.$on('slider', this.slider);
     },
     components: {
         Tweet

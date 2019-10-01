@@ -1,6 +1,7 @@
 <template>
     <div id="header">
-        <Modal @hide="hideModal" v-if="btnFollowers || btnFollwing" :arrayOfUsers="arrayOfUsers" :title="modalTitle"/>
+        <Modal @hide="hideModal" v-if="btnFollowers || btnFollwing" :arrayOfUsers="arrayOfUsers" :userLogged="userLogged" :title="modalTitle"/>
+        <BtnFollow :userToCheck="username" :user="userLogged" v-if="userLogged.username != username && !btnFollowers && !btnFollwing"/>
         <h1 >@{{username}}</h1>
         <div id="followers-container">
             <span @click="showModal"><strong>Followers</strong> {{followers.length}}</span>
@@ -12,10 +13,12 @@
 <script>
 
 import Modal from '../components/ModalHeader';
+import BtnFollow from '../components/FollowBnt';
 
 export default {
     name: 'user-header',
     props: {
+        userLogged: Object,
         username: String,
         followers: Array,
         following: Array
@@ -52,7 +55,8 @@ export default {
         }
     },
     components: {
-        Modal
+        Modal,
+        BtnFollow
     }
 }
 </script>
@@ -61,6 +65,12 @@ export default {
 
     $primary-color: #26364F;
     $bg-color: #F8F8F8;
+
+    #follow-btn {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+    }
     
     #followers-container {
         margin-top: 15px;

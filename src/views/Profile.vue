@@ -1,8 +1,8 @@
 <template>
     <div id="profile" :class="showProfileComponent ? '' : 'hide-scroll'">
-        <Header @scroll="scrollHandler" :username="username" :followers="user.followers" :following="user.following" v-if="username"/>
-        <Slider leftBtn="Tweets" rightBtn="Likes" :cssScroll="cssScroll"/>
-        <SliderContainers :selected="selected" :cssScroll="cssScroll"/>
+        <Header @scroll="scrollHandler" :username="user.username" :userLogged="userLogged" :followers="user.followers" :following="user.following" v-if="user && userLogged.username"/>
+        <Slider leftBtn="Tweets" rightBtn="Likes" :cssScroll="cssScroll" v-if="user"/>
+        <SliderContainers :username="user.username" :userNameLogged="userLogged.username" :cssScroll="cssScroll" v-if="user && userLogged.username"/>
         <Navbar/>
     </div>
 </template>
@@ -10,6 +10,7 @@
 <script>
 
 import { mapState, mapGetters } from 'vuex';
+import Axios from '../interceptors';
 import Header from '../components/UserHeader';
 import Navbar from '../components/Navbar';
 import Slider from '../components/Slider';
@@ -19,11 +20,8 @@ export default {
     name: 'profile',
     data() {
         return {
+            user: '',
             jwt: localStorage.getItem('jwt'),
-            selected: {
-                tweets: true,
-                likes: false
-            },
             cssScroll: {
                 slider: '',
                 container: ''
@@ -32,21 +30,32 @@ export default {
         }
     },
     computed: {
-        ...mapGetters('profile', [ 'username']),
-        ...mapState('profile', [ 'user' ])
+        ...mapState('profile', {userLogged: 'user'}),
+        ...mapGetters('profile', { userNameLogged: 'username' }),
     },
     methods: {
         scrollHandler(event){
             this.showProfileComponent = event;
+        },
+        getUser() {
+            Axios.get(`http://localhost:3001/twitter/users/user/${this.$route.params.user}`)
+                .then(res => this.user = res.data)
+                .catch(() => this.$router.replace('/'));
+        }
+    },
+    watch: {
+        '$route'() {
+            this.showProfileComponent = true;
+            this.user = '';
+            this.getUser();
         }
     },
     created() {
         if(!this.jwt) {
             this.$router.replace('/login');
         }
-        if(!this.username){
-            this.$store.dispatch('profile/getUser');
-        }
+        this.getUser();
+        
         window.onscroll = () => {
             if(document.documentElement.scrollTop > 134){
                 this.cssScroll.slider = 'slider-fixed';

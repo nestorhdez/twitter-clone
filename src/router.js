@@ -31,7 +31,7 @@ export default new Router({
       component: Search
     },
     {
-      path: '/profile',
+      path: '/:user',
       name: 'profile',
       component: Profile
     }

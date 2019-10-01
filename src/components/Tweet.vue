@@ -1,6 +1,6 @@
 <template>
     <div class="tweet">
-        <router-link :to="`/user/${tweet.owner}`" class="username">@{{tweet.owner}}</router-link>
+        <router-link :to="`/${tweet.owner}`" class="username">@{{tweet.owner}}</router-link>
         <p class="text">{{tweet.text}}</p>
         <div>
             <span class="date">{{dateFormated}}</span>
