@@ -4,17 +4,14 @@
         <div @click="$emit('hide')" id="hide">Close</div>
         <span id="modal-title">{{title}}</span>
         <div id="users-model-container">
-            <div class="user" v-for="(user, i) in arrayOfUsers" :key="i">
-                <router-link :to="`/${user}`">@{{user}}</router-link>
-                <FollowBtn :userToCheck="user" :user="userLogged"/>
-            </div>
+            <UserComponent :user="user" :userLogged="userLogged" v-for="(user, i) in arrayOfUsers" :key="i"/>
         </div>
     </div>
 
 </template>
 
 <script>
-import FollowBtn from './FollowBnt';
+import UserComponent from './User';
 
 export default {
     name: 'modal',
@@ -24,7 +21,7 @@ export default {
         arrayOfUsers: Array
     },
     components:{
-        FollowBtn
+        UserComponent
     }
 }
 </script>

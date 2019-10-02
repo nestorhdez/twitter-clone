@@ -3,7 +3,6 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
 import Axios from '../interceptors';
 
 
@@ -40,6 +39,7 @@ export default {
         background-color: $primary-color;
         color: $bg-color;
         padding: 5px;
+        width: 65px;
         border-radius: 3px;
         border: none;
         font-weight: 500;
