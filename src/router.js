@@ -5,6 +5,7 @@ import Signup from './views/Signup'
 import Home from './views/Home'
 import Search from './views/Search'
 import Profile from './views/Profile'
+import WriteTweet from './views/WriteTweet'
 
 Vue.use(Router)
 
@@ -34,6 +35,11 @@ export default new Router({
       path: '/:user',
       name: 'profile',
       component: Profile
+    },
+    {
+      path: '/write/tweet',
+      name: 'write-tweet',
+      component: WriteTweet
     }
   ]
 })

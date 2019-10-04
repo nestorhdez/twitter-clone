@@ -1,7 +1,7 @@
 <template>
     <div class="user">
         <router-link :to="`/${user}`">@{{user}}</router-link>
-        <FollowBtn :userToCheck="user" :user="userLogged"/>
+        <FollowBtn :userToCheck="user" :user="userLogged" v-if="user != userLogged.username"/>
     </div>    
 </template>
 

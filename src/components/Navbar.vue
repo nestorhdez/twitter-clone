@@ -6,6 +6,9 @@
         <router-link to="/search" class="nav-icon">
             <img class="nav-icon" :src="getSrc(icons.search)" alt="Search icon">
         </router-link>
+        <router-link to="/write/tweet" class="nav-icon">
+            <img class="nav-icon" src="../assets/icons/tweet.svg" alt="Tweet icon">
+        </router-link>
         <router-link :to="`/${username}`" class="nav-icon">
             <img class="nav-icon" :src="getSrc(icons.profile)" alt="Profile icon">
         </router-link>
