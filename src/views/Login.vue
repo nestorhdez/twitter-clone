@@ -37,7 +37,7 @@ export default {
 			}
 			this.error.status = false;
 			this.error.message = '';
-			this.$axios.post('http://localhost:3001/twitter/login', this.form)
+			this.$axios.post('https://twitter-clone-eoi.herokuapp.com/twitter/login', this.form)
 				.then(res => {
 				localStorage.setItem('jwt', JSON.stringify(res.data))
 				this.$router.replace('/');

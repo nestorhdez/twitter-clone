@@ -49,7 +49,7 @@ methods: {
         if(this.form.name == ''){
             delete this.form.name;
         }
-        this.$axios.post('http://localhost:3001/twitter/signup', this.form)
+        this.$axios.post('https://twitter-clone-eoi.herokuapp.com/twitter/signup', this.form)
             .then(res => {
                 localStorage.setItem('jwt', JSON.stringify(res.data))
                 this.$router.replace('/');

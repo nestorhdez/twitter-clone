@@ -46,7 +46,7 @@ export default {
     methods: {
         getFromApi(endPoint, obj){
             obj.error.status = false;
-            Axios.get(`http://localhost:3001/twitter/tweets/${endPoint}/${this.username}`)
+            Axios.get(`https://twitter-clone-eoi.herokuapp.com/twitter/tweets/${endPoint}/${this.username}`)
                 .then(res => {
                     if(res.data.data.length > 0) {
                         obj.array = res.data.data;

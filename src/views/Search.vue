@@ -43,7 +43,7 @@ export default {
         getSearch(){
             if (this.search.text) {
                 this.error.status = false;
-                Axios.get(`http://localhost:3001/twitter/search?search=${this.search.text}`)
+                Axios.get(`https://twitter-clone-eoi.herokuapp.com/twitter/search?search=${this.search.text}`)
                     .then(res => {
                         this.users = res.data.users;
                         this.tweets = res.data.tweets;

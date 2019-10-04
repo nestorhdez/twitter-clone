@@ -20,7 +20,7 @@ const mutations = {
 //Actions
 const actions = {
     getUser: ({ commit }) => {
-        Axios.get('http://localhost:3001/twitter/users/user')
+        Axios.get('https://twitter-clone-eoi.herokuapp.com/twitter/users/user')
             .then(res => commit('setUser', res.data))
             .catch(err => commit('setUser', err))
     }

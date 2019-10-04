@@ -34,7 +34,7 @@ export default {
             this.$store.dispatch('profile/getUser');
         }
         this.error.status = false;
-        Axios.get('http://localhost:3001/twitter/tweets/timeline')
+        Axios.get('https://twitter-clone-eoi.herokuapp.com/twitter/tweets/timeline')
             .then(res => {
                 if(res.data.data.length > 0) {
                     this.tweets = res.data.data;

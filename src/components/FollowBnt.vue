@@ -20,7 +20,7 @@ export default {
     methods: {
         followUnfollowAction(e){
             const btn = e.target.innerText.toLowerCase();
-            Axios.patch(`http://localhost:3001/twitter/users/${btn}/${this.userToCheck}`)
+            Axios.patch(`https://twitter-clone-eoi.herokuapp.com/twitter/users/${btn}/${this.userToCheck}`)
                 .then(() => {
                     let index = this.user.following.findIndex(username => username == this.userToCheck)
                     index != -1 ? this.user.following.splice(index, 1) : this.user.following.push(this.userToCheck);

@@ -27,7 +27,7 @@ AuthAxios.interceptors.response.use( (response) => {
         if(error.response.status == 401 ){
             const tokenObj = localStorage.getItem('jwt');
             const token = JSON.parse(tokenObj)
-            return axios.post('http://localhost:3001/twitter/token', {refresh_token: token.refresh_token, grant_type: "refresh_token"})
+            return axios.post('https://twitter-clone-eoi.herokuapp.com/twitter/token', {refresh_token: token.refresh_token, grant_type: "refresh_token"})
                 .then(res => {
                     localStorage.removeItem('jwt');
                     localStorage.setItem('jwt', JSON.stringify(res.data));

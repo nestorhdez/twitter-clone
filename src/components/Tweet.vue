@@ -39,14 +39,14 @@ export default {
         },
         like() {
             if(this.icon == 'like.svg') {
-                Axios.patch(`http://localhost:3001/twitter/tweets/like/${this.tweet._id}`)
+                Axios.patch(`https://twitter-clone-eoi.herokuapp.com/twitter/tweets/like/${this.tweet._id}`)
                     .then(() => {
                         this.icon = 'like-fill.svg';
                         this.tweet.likes.push(1);
                     })
                     .catch(() => {});
             }else {
-                Axios.patch(`http://localhost:3001/twitter/tweets/dislike/${this.tweet._id}`)
+                Axios.patch(`https://twitter-clone-eoi.herokuapp.com/twitter/tweets/dislike/${this.tweet._id}`)
                     .then(() => {
                         this.icon = 'like.svg'
                         this.tweet.likes.pop();

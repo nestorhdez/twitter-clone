@@ -38,7 +38,7 @@ export default {
             this.showProfileComponent = event;
         },
         getUser() {
-            Axios.get(`http://localhost:3001/twitter/users/user/${this.$route.params.user}`)
+            Axios.get(`https://twitter-clone-eoi.herokuapp.com/twitter/users/user/${this.$route.params.user}`)
                 .then(res => this.user = res.data)
                 .catch(() => this.$router.replace('/'));
         }
