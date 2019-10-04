@@ -32,9 +32,11 @@ export default {
     methods: {
         postTweet() {
             this.error = false;
-            Axios.post('https://twitter-clone-eoi.herokuapp.com/twitter/tweets', { text: this.text, owner: this.username })
-                .then(() => this.$router.go(-1))
-                .catch(() => this.error = true);
+            if(this.text){
+                Axios.post('https://twitter-clone-eoi.herokuapp.com/twitter/tweets', { text: this.text, owner: this.username })
+                    .then(() => this.$router.go(-1))
+                    .catch(() => this.error = true);
+            }
         }
     },
     created(){
@@ -60,8 +62,7 @@ export default {
         button{
             color: $primary-color;
             font-size: 1rem;
-            border: 1px solid $primary-color;
-            border-radius: 25px;
+            border: none;
             padding: 2px 5px;
             background: none;
             outline: none;
