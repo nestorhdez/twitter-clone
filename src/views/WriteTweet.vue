@@ -1,13 +1,13 @@
 <template>
     <div id="write-tweet">
         <div class="nav">
-            <span @click="$router.go(-1)">Close</span>
+            <span id="close" @click="$router.go(-1)">Close</span>
             <span>@{{username}}</span>
             <button @click="postTweet">Tweet</button>
         </div>
         <div id="tweet">
             <span id="error" v-if="error">Something wrong happend. Try it again.</span>
-            <textarea id="" v-model="text" cols="30" rows="5" maxlength="150" placeholder="What's new?"></textarea>
+            <textarea v-bind:value="text" v-on:input="text = $event.target.value" cols="30" rows="5" maxlength="150" placeholder="What's new?"></textarea>
             <span>{{text.length}} / 150</span>
         </div>
     </div>
@@ -58,6 +58,10 @@ export default {
         padding: 10px 15px;
         margin-bottom: 10px;
         box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.3);
+
+        #close{
+            cursor: default;
+        }
 
         button{
             color: $primary-color;
