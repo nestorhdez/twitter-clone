@@ -44,6 +44,7 @@ export default {
         top: 15px;
         left: 15px;
         font-weight: 500;
+        cursor: default;
     }
 
     #modal-title {

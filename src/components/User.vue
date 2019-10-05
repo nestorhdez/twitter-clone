@@ -40,4 +40,13 @@ export default {
         }
     }
 
+    @media (min-width: 768px) {
+        .user{
+            width: 50%;
+            margin: 0 auto;
+            border-right: 1px solid $primary-color;
+            border-left: 1px solid $primary-color;
+        }
+    }
+
 </style>

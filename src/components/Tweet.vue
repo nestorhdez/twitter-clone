@@ -69,11 +69,14 @@ export default {
 
 <style lang="scss" scoped>
 
+    $primary-color: #26364f;
+
     .tweet {
         display: flex;
         flex-direction: column;
         align-items: flex-start;
-        border-bottom: 1px solid #26364f;
+        border-color: $primary-color;
+        border-bottom: 1px solid;
         padding: 10px;
 
         div {
@@ -84,7 +87,7 @@ export default {
 
     .username {
         text-decoration: none;
-        color: #26364f;
+        color: $primary-color;
         font-weight: 500;
     }
 
@@ -104,6 +107,15 @@ export default {
     .like {
         height: 20px;
         width: 20px;
+    }
+
+    @media (min-width: 768px) {
+        .tweet{
+            width: 50%;
+            margin: 0 auto;
+            border-right: 1px solid;
+            border-left: 1px solid;
+        }
     }
 
 </style>

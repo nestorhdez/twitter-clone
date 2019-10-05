@@ -77,4 +77,15 @@ $bg-color: #F8F8F8;
     border-bottom: 3px solid $primary-color;
 }
 
+@media (min-width: 768px) {
+    #slider, #slider.slider-fixed{
+        width: 50%;
+        margin: 0 auto;
+    }
+
+    #slider.slider-fixed{
+        left: calc(50vw - 25%);
+    }
+}
+
 </style>

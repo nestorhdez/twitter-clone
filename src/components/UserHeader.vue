@@ -81,4 +81,14 @@ export default {
             margin-right: 10px;
         }
     }
+
+    span{
+        cursor: default;
+    }
+
+    @media (min-width: 768px) {
+        #follow-btn {
+            right: 25vw;
+        }
+    }
 </style>
