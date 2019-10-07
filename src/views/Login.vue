@@ -38,12 +38,10 @@ export default {
 			this.error.status = false;
 			this.error.message = '';
 			this.$axios.post('https://twitter-clone-eoi.herokuapp.com/twitter/login', this.form)
-				.then(res => {
-				localStorage.setItem('jwt', JSON.stringify(res.data))
-				this.$router.replace('/');
-				})
+				.then(res => localStorage.setItem('jwt', JSON.stringify(res.data) ) )
+				.then(() => this.$router.replace('/') )
 				.catch(err => {
-					if(err.response && err.response.status == 400) {
+					if(err.response) {
 						this.error.status = true;
 						this.error.message = "Wrong email or password";
 					}else {
@@ -103,6 +101,7 @@ export default {
 		border-bottom: 3px solid $secondary-color;
 		padding: 10px;
 		margin-bottom: 20px;
+		outline: none;
 	}
 	input, input::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
 		color: $secondary-color;

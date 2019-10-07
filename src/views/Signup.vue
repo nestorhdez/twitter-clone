@@ -9,9 +9,9 @@
             <label for="username">Username*</label>
             <input id="username" type="text" v-model="form.username" placeholder="Username..." required>
             <label for="email">Email*</label>
-            <input id="email" type="email" v-model="form.email" placeholder="Email..." pattern="/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,20})+$/" required>
-            <label for="password">Password*</label>
-            <input id="password" type="password" v-model="form.password" placeholder="One uppercase, one number and 7 min" pattern="/^(?=.*[A-Z])(?=.*[0-9])(?=.{7,})/" required>
+            <input id="email" type="email" v-model="form.email" placeholder="Email..." required>
+            <label for="password">Password*<span>One lower case, one number and seven characters minimum.</span></label>
+            <input id="password" type="password" v-model="form.password" placeholder="Password..." pattern="/^(?=.*[A-Z])(?=.*[0-9])(?=.{7,})/" required>
             <button @click="signup">Sign up</button>
         </form>
     </div>
@@ -62,9 +62,9 @@ methods: {
                 }
                 const res = err.response.request.response;
                 const msg = JSON.parse(res).errmsg;
-                if(msg.includes('duplicate') && msg.includes('email')) {
+                if(msg && msg.includes('duplicate') && msg.includes('email')) {
                     this.error.message = 'This email has already an account';
-                }else if (msg.includes('duplicate') && msg.includes('username')) {
+                }else if (msg && msg.includes('duplicate') && msg.includes('username')) {
                     this.error.message = 'This username already exists';
                 }
             });
@@ -111,12 +111,20 @@ methods: {
         font-weight: 500;
     }
 
+    label span {
+        font-size: .8rem;
+        display: block;
+        padding-right: 50px;
+        margin-bottom: 10px;
+    }
+
     input {
         background-color: $primary-color;
         border: none;
         border-bottom: 3px solid $secondary-color;
         padding: 10px;
         margin-bottom: 20px;
+        outline: none;
     }
     input, input::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
         color: $secondary-color;
@@ -168,12 +176,16 @@ methods: {
 		label {
 			padding-top: 6px;
 		}
+
+        label span {
+            margin-bottom: 0;
+        }
         h2 {
 			margin-bottom: 20px;
 		}
 		form button {
 			flex-basis: 30%;
-			margin: 0 auto;
+			margin: 15px auto 0;
 		}
 	}
 </style>
