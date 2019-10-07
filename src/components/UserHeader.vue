@@ -2,6 +2,7 @@
     <div id="header">
         <Modal @hide="hideModal" v-if="btnFollowers || btnFollwing" :arrayOfUsers="arrayOfUsers" :userLogged="userLogged" :title="modalTitle"/>
         <BtnFollow :userToCheck="username" :user="userLogged" v-if="userLogged.username != username && !btnFollowers && !btnFollwing"/>
+        <button @click="logOut" class="log-out btn" v-else>Log out</button>
         <h1 >@{{username}}</h1>
         <div id="followers-container">
             <span @click="showModal"><strong>Followers</strong> {{followers.length}}</span>
@@ -52,6 +53,10 @@ export default {
                 this.btnFollowers = false;
                 this.btnFollwing = true;
             }
+        },
+        logOut(){
+            localStorage.removeItem('jwt');
+            this.$router.replace('/login');
         }
     },
     components: {
@@ -66,10 +71,21 @@ export default {
     $primary-color: #26364F;
     $bg-color: #F8F8F8;
 
-    #follow-btn {
+    #follow-btn, .log-out {
         position: absolute;
         top: 15px;
         right: 15px;
+    }
+
+    .btn {
+        background-color: #26364F;
+        color: #F8F8F8;
+        padding: 5px;
+        width: 65px;
+        border-radius: 3px;
+        border: none;
+        font-weight: 500;
+        outline: none;
     }
     
     #followers-container {
@@ -87,7 +103,7 @@ export default {
     }
 
     @media (min-width: 768px) {
-        #follow-btn {
+        #follow-btn, .log-out {
             right: 25vw;
         }
     }
