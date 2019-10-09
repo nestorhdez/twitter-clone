@@ -11,7 +11,7 @@
             <label for="email">Email*</label>
             <input id="email" type="email" v-model="form.email" placeholder="Email..." required>
             <label for="password">Password*<span>One lower case, one number and seven characters minimum.</span></label>
-            <input id="password" type="password" v-model="form.password" placeholder="Password..." pattern="/^(?=.*[A-Z])(?=.*[0-9])(?=.{7,})/" required>
+            <input id="password" type="password" v-model="form.password" placeholder="Password..." required>
             <button @click="signup">Sign up</button>
         </form>
     </div>
@@ -50,10 +50,8 @@ methods: {
             delete this.form.name;
         }
         this.$axios.post('https://twitter-clone-eoi.herokuapp.com/twitter/signup', this.form)
-            .then(res => {
-                localStorage.setItem('jwt', JSON.stringify(res.data))
-                this.$router.replace('/');
-            })
+            .then(res => localStorage.setItem('jwt', JSON.stringify(res.data) ) )
+            .then(() => this.$router.replace('/') )
             .catch(err => {
                 this.error.status = true;
                 if(err.request.status != 400){
@@ -62,10 +60,13 @@ methods: {
                 }
                 const res = err.response.request.response;
                 const msg = JSON.parse(res).errmsg;
+                const passErr = JSON.parse(res).message;
                 if(msg && msg.includes('duplicate') && msg.includes('email')) {
                     this.error.message = 'This email has already an account';
                 }else if (msg && msg.includes('duplicate') && msg.includes('username')) {
                     this.error.message = 'This username already exists';
+                }else if( passErr && passErr.includes('password') ){
+                    this.error.message = 'The password is invalid';
                 }
             });
     }
