@@ -92,7 +92,8 @@ export default {
     }
 
     .text {
-        margin: 10px 0;
+        margin: 15px 0;
+        text-align: left;
     }
 
     .date {
