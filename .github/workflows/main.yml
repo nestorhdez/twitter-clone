@@ -1,0 +1,14 @@
+on:
+  push:
+    branches: master
+
+jobs:
+  merge_job:
+    runs-on: ubuntu-latest
+    name: Deploy
+    steps:
+    - uses: actions/checkout@v1
+    - name: Compiles and deploy
+      uses: ./.github/actions/deploy
+      with:
+        email: "${{secrets.EMAIL}}"
