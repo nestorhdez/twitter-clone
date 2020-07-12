@@ -8,9 +8,15 @@ jobs:
     name: Deploy
     steps:
     - uses: actions/checkout@v1
+    - name: Get commit message
+      id: commit
+      run: echo ::set-output name=commit::$(git log -1 --pretty=%B)
     - name: Uncomment dist folder on gitignore file
-      run: sed -i 's/^\/dist.*/#\/dist/g' .gitignore
+      run: |
+        git checkout gh-pages
+        sed -i 's/^\/dist.*/#\/dist/g' .gitignore
     - name: Compiles and deploy
       uses: ./.github/actions/deploy
       with:
         email: "${{secrets.EMAIL}}"
+        commit: "${{ steps.commit.outputs.commit }}"
