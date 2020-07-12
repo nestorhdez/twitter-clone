@@ -22,6 +22,7 @@ echo Vue config created.
 # Comment the dist folder to push it to github
 sed -i -e 's/^\/dist.*/#\/dist/g' .gitignore
 
+npm i
 npm run build
 
 git add dist && git commit -m "$COMMIT"
