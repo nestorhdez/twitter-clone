@@ -22,7 +22,7 @@ echo "module.exports = { publicPath: '$PROJECT' }" > ./vue.config.js
 echo Vue config created.
 
 # Comment the dist folder to push it to github
-sed -i 's/^\/dist.*/#\/dist/g' .gitignore
+rm .gitignore
 
 npm run build
 
