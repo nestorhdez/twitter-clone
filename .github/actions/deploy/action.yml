@@ -8,6 +8,9 @@ inputs:
     description: 'Directory to change to before pushing.'
     required: false
     default: '.'
+  email:
+    description: 'Email to use on the git config'
+    required: true
 runs:
   using: 'node12'
   main: 'deploy.js'
