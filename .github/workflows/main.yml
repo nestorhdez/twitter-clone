@@ -8,6 +8,8 @@ jobs:
     name: Deploy
     steps:
     - uses: actions/checkout@v1
+    - name: Npm install
+      run: npm i
     - name: Compiles and deploy
       uses: ./.github/actions/deploy
       with:
