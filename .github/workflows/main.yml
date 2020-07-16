@@ -7,9 +7,9 @@ jobs:
     runs-on: ubuntu-latest
     name: Deploy
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v2
     - name: Npm install
-      run: npm i
+      run: npm ci
     - name: Compiles and deploy
       uses: ./.github/actions/deploy
       with:
