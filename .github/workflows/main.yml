@@ -8,8 +8,12 @@ jobs:
     name: Deploy
     steps:
     - uses: actions/checkout@v2
+      with:
+        persist-credentials: false
     - name: Npm install
-      run: npm ci
+      run: npm i
+      env: 
+        NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
     - name: Compiles and deploy
       uses: ./.github/actions/deploy
       with:
