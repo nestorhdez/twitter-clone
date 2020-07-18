@@ -83,6 +83,7 @@ export default {
     $primary-light: #3a5073;
     $bg-color: #F8F8F8;
     $error: #F0825D;
+    $light-color: #e6ecf0;
 
     #search {
         padding: 120px 0 55px;
@@ -98,8 +99,8 @@ export default {
         border-radius: 4px;
         font-size: 1rem;
         border-width: 1px;
-        border-style: inset;
-        border-color: initial;
+        border-style: solid;
+        border-color: $light-color;
         outline: none;
     }
 
