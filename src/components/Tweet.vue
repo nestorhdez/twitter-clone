@@ -70,14 +70,14 @@ export default {
 <style lang="scss" scoped>
 
     $primary-color: #26364f;
+    $light-color: #e6ecf0;
 
     .tweet {
         display: flex;
         flex-direction: column;
         align-items: flex-start;
-        border-color: $primary-color;
-        border-bottom: 1px solid;
-        padding: 10px;
+        border-bottom: 1px solid $light-color;
+        padding: 10px 30px;
 
         div {
             display: flex;
@@ -110,12 +110,19 @@ export default {
         width: 20px;
     }
 
-    @media (min-width: 768px) {
+    @media (min-width: 650px) {
         .tweet{
             width: 50%;
             margin: 0 auto;
-            border-right: 1px solid;
-            border-left: 1px solid;
+            border-right: 1px solid $light-color;
+            border-left: 1px solid $light-color;
+            padding: 10px 25px;
+        }
+    }
+
+    @media (min-width: 1000px) {
+        .tweet{
+            width: 45%;
         }
     }
 
