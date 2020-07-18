@@ -24,13 +24,14 @@ export default {
 <style lang="scss" scoped>
 
     $primary-color: #26364F;
+    $light-color: #e6ecf0;
 
     .user {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 10px 50px;
-        border-bottom: 1px solid rgba(128, 128, 128, 0.52);
+        padding: 20px 25px;
+        border-bottom: 1px solid $light-color;
         
         a {
             display: block;
@@ -40,12 +41,18 @@ export default {
         }
     }
 
-    @media (min-width: 768px) {
+    @media (min-width: 650px) {
         .user{
             width: 50%;
             margin: 0 auto;
-            border-right: 1px solid $primary-color;
-            border-left: 1px solid $primary-color;
+            border-right: 1px solid $light-color;
+            border-left: 1px solid $light-color;
+        }
+    }
+
+    @media (min-width: 1000px) {
+        .user{
+            width: 45%;
         }
     }
 
