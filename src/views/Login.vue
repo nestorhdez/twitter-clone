@@ -31,24 +31,22 @@ export default {
 		}
 	},
 	methods: {
-		login() {
+		async login() {
 			if(this.form.email == '' || this.form.password == ''){
 				return;
 			}
+
 			this.error.status = false;
 			this.error.message = '';
-			this.$axios.post('https://twitter-clone-eoi.herokuapp.com/twitter/login', this.form)
-				.then(res => localStorage.setItem('jwt', JSON.stringify(res.data) ) )
-				.then(() => this.$router.replace('/') )
-				.catch(err => {
-					if(err.response) {
-						this.error.status = true;
-						this.error.message = "Wrong email or password";
-					}else {
-						this.error.status = true;
-						this.error.message = "Connection error";
-					}
-				})
+
+			try {
+				const { data } = await this.$axios.post('https://twitter-clone-eoi.herokuapp.com/twitter/login', this.form);
+				localStorage.setItem('jwt', JSON.stringify(data) );
+				this.$router.replace('/');
+			} catch({ response: err }) {
+				this.error.status = true;
+				this.error.message = err ? "Wrong email or password" : "Connection error";
+			}
 		}
 	},
 	components: {
