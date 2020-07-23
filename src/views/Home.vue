@@ -1,7 +1,10 @@
 <template>
-    <div class="home" v-if="username">
-		<h2 id="error" v-if="error.status" >{{error.message}}</h2>
-        <Tweet :tweet="tweet" :username="username" v-for="(tweet, i) in tweets" :key="i"/>
+    <div>
+        <Loader v-if="loading"/>
+        <div class="home" v-if="username">
+            <h2 id="error" v-if="error.status" >{{error.message}}</h2>
+            <Tweet :tweet="tweet" :username="username" v-for="(tweet, i) in tweets" :key="i"/>
+        </div>
         <Navbar/>
     </div>
 </template>
@@ -9,6 +12,7 @@
 <script>
 import Tweet from '../components/Tweet';
 import Navbar from '../components/Navbar';
+import Loader from '../components/Loader';
 import Axios from '../interceptors';
 import { mapGetters } from 'vuex';
 
@@ -20,7 +24,8 @@ export default {
             error: {
 				status: false,
 				message: ''
-			}
+            },
+            loading: false
         }
     },
     computed: mapGetters('profile', [
@@ -30,12 +35,17 @@ export default {
         if(!this.jwt) {
             this.$router.replace('/login')
         }
+
         if(!this.username){
             this.$store.dispatch('profile/getUser');
         }
+
+        this.loading = true;
         this.error.status = false;
+
         Axios.get('https://twitter-clone-eoi.herokuapp.com/twitter/tweets/timeline')
             .then(res => {
+                this.loading = false;
                 if(res.data.data.length > 0) {
                     this.tweets = res.data.data;
                 }else {
@@ -44,13 +54,15 @@ export default {
                 }
             })
             .catch(() => {
+                this.loading = false;
                 this.error.status = true;
                 this.error.message = 'Something wrong happend';
             })
     },
     components: {
         Tweet,
-        Navbar
+        Navbar,
+        Loader
     }
 }
 </script>

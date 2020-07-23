@@ -1,20 +1,22 @@
 <template>
 	<div class="login">
+		<Loader v-if="loading"/>
 		<h1>Twitter clone</h1>
 		<Nav/>
 		<h2 id="error" v-if="error.status" >{{error.message}}</h2>
-		<form>
+		<form @submit="login">
 			<label for="email">Email</label>
 			<input id="email" type="email" v-model="form.email" placeholder="Email..." required>
 			<label for="password">Password</label>
 			<input id="password" type="password" v-model="form.password" placeholder="Password..." required>
-			<button @click="login">Log in</button>
+			<button type="submit">Log in</button>
 		</form>
 	</div>
 </template>
 
 <script>
-import Nav from '../components/NavLogin'
+import Nav from '../components/NavLogin';
+import Loader from '../components/Loader';
 
 export default {
 	data() {
@@ -27,11 +29,15 @@ export default {
 				status: false,
 				message: ''
 			},
-            jwt: localStorage.getItem('jwt')
+			jwt: localStorage.getItem('jwt'),
+			loading: false
 		}
 	},
 	methods: {
-		async login() {
+		async login(e) {
+			e.preventDefault();
+			this.loading = true;
+
 			if(this.form.email == '' || this.form.password == ''){
 				return;
 			}
@@ -41,16 +47,19 @@ export default {
 
 			try {
 				const { data } = await this.$axios.post('https://twitter-clone-eoi.herokuapp.com/twitter/login', this.form);
+				this.loading = false;
 				localStorage.setItem('jwt', JSON.stringify(data) );
 				this.$router.replace('/');
 			} catch({ response: err }) {
+				this.loading = false;
 				this.error.status = true;
 				this.error.message = err ? "Wrong email or password" : "Connection error";
 			}
 		}
 	},
 	components: {
-		Nav
+		Nav,
+		Loader
 	},
 	created(){
 		if(this.jwt){
@@ -156,7 +165,7 @@ export default {
 		}
 		button {
 			flex-basis: 30%;
-			margin: 0 auto;
+			margin: 30px auto;
 		}
 	}
 

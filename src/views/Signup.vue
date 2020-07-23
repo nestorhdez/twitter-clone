@@ -1,9 +1,10 @@
 <template>
   <div class="signup">
+    <Loader v-if="loading"/>
     <h1>Twitter clone</h1>
     <Nav />
     <h2 id="error" v-if="error.status">{{ error.message }}</h2>
-    <form>
+    <form @submit="signup">
       <label for="name">Name</label>
       <input
         id="name"
@@ -40,13 +41,14 @@
         placeholder="Password..."
         required
       />
-      <button @click="signup">Sign up</button>
+      <button type="submit">Sign up</button>
     </form>
   </div>
 </template>
 
 <script>
 import Nav from "../components/NavLogin";
+import Loader from "../components/Loader";
 
 export default {
   data() {
@@ -62,15 +64,21 @@ export default {
         message: "",
       },
       jwt: localStorage.getItem("jwt"),
+      loading: false
     };
   },
   components: {
     Nav,
+    Loader
   },
   methods: {
-    async signup() {
+    async signup(e) {
+      e.preventDefault();
+
+      this.loading = true;
       this.error.status = false;
       this.error.message = "";
+
       if (
         this.form.username == "" ||
         this.form.email == "" ||
@@ -84,9 +92,11 @@ export default {
 
       try {
         const { data } = await this.$axios.post("https://twitter-clone-eoi.herokuapp.com/twitter/signup",this.form);
+        this.loading = false;
         localStorage.setItem("jwt", JSON.stringify(data));
         this.$router.replace("/");
       } catch (err) {
+        this.loading = false;
         this.error.status = true;
         this.error.message = this.parseError(err);
       }
@@ -229,7 +239,7 @@ button:active {
   }
   form button {
     flex-basis: 30%;
-    margin: 15px auto 0;
+    margin: 40px auto 0;
   }
 }
 </style>
