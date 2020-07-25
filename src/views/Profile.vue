@@ -1,8 +1,11 @@
 <template>
-    <div id="profile" :class="showProfileComponent ? '' : 'hide-scroll'">
-        <Header @scroll="scrollHandler" :username="user.username" :userLogged="userLogged" :followers="user.followers" :following="user.following" v-if="user && userLogged.username"/>
-        <Slider leftBtn="Tweets" rightBtn="Likes" :cssScroll="cssScroll" v-if="user"/>
-        <SliderContainers :username="user.username" :userNameLogged="userLogged.username" :cssScroll="cssScroll" v-if="user && userLogged.username"/>
+    <div>
+        <Loader v-if="loading"/>
+        <div id="profile" :class="showProfileComponent ? '' : 'hide-scroll'">
+            <Header @scroll="scrollHandler" :username="user.username" :userLogged="userLogged" :followers="user.followers" :following="user.following" v-if="user && userLogged.username"/>
+            <Slider leftBtn="Tweets" rightBtn="Likes" :cssScroll="cssScroll" v-if="user"/>
+            <SliderContainers :username="user.username" :userNameLogged="userLogged.username" :cssScroll="cssScroll" v-if="user && userLogged.username"/>
+        </div>
         <Navbar/>
     </div>
 </template>
@@ -13,6 +16,7 @@ import { mapState, mapGetters } from 'vuex';
 import Axios from '../interceptors';
 import Header from '../components/UserHeader';
 import Navbar from '../components/Navbar';
+import Loader from '../components/Loader';
 import Slider from '../components/Slider';
 import SliderContainers from '../components/SliderContainers';
 
@@ -26,7 +30,8 @@ export default {
                 slider: '',
                 container: ''
             },
-            showProfileComponent: true
+            showProfileComponent: true,
+            loading: false
         }
     },
     computed: {
@@ -38,9 +43,17 @@ export default {
             this.showProfileComponent = event;
         },
         getUser() {
+            this.loading = true;
+            
             Axios.get(`https://twitter-clone-eoi.herokuapp.com/twitter/users/user/${this.$route.params.user}`)
-                .then(res => this.user = res.data)
-                .catch(() => this.$router.replace('/'));
+                .then(res => {
+                    this.loading = false;
+                    this.user = res.data;
+                })
+                .catch(() => {
+                    this.loading = false;
+                    this.$router.replace('/');
+                });
         }
     },
     watch: {
@@ -70,7 +83,8 @@ export default {
         Header,
         Navbar,
         Slider,
-        SliderContainers
+        SliderContainers,
+        Loader
     }
 }
 </script>
