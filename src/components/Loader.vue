@@ -30,8 +30,8 @@
     border-radius: 50%;
     width: 50px;
     height: 50px;
-    -webkit-animation: spin-data-v-04a0d67a 1.4s linear infinite;
-    animation: spin-data-v-04a0d67a 1.4s linear infinite;
+    -webkit-animation: spin 1.4s linear infinite;
+    animation: spin 1.4s linear infinite;
     box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.4);
   }
 
